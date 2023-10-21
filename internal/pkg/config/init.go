@@ -48,3 +48,7 @@ func Init() (err error) {
 
 	return viper.ReadInConfig()
 }
+
+func Reload() (err error) {
+	return viper.ReadInConfig()
+}

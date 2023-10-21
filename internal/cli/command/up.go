@@ -77,6 +77,8 @@ func (u *Up) Execute(cmd *cobra.Command, args []string) error {
 		}
 	}
 
+	action.SetLastUpdate()
+
 	if err = viper.WriteConfig(); err != nil {
 		return err
 	}

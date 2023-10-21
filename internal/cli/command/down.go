@@ -25,6 +25,8 @@ func (d *Down) Execute(cmd *cobra.Command, args []string) error {
 		config.RemoveActiveDomain(id)
 	}
 
+	action.SetLastUpdate()
+
 	if err = viper.WriteConfig(); err != nil {
 		return err
 	}
