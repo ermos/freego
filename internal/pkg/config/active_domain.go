@@ -12,7 +12,7 @@ type ActiveDomain struct {
 	Host      string    `yaml:"host"`
 	Port      int       `yaml:"port"`
 	Status    string    `yaml:"status"`
-	CreatedAt time.Time `yaml:"created_at"`
+	CreatedAt time.Time `yaml:"createdat"`
 }
 
 func GetActiveDomains() map[string]ActiveDomain {

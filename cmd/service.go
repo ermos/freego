@@ -8,7 +8,7 @@ import (
 
 // serviceCmd represents the service command
 var serviceCmd = &cobra.Command{
-	Use:   "service",
+	Use:   "service <start|stop|restart|install>",
 	Short: "Manage progo service",
 	Long:  `Manage progo service`,
 	Run: func(cmd *cobra.Command, args []string) {
