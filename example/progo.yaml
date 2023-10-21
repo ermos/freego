@@ -1,0 +1,7 @@
+domains:
+  hello.lc/app1:
+    port: 8080
+  hello.lc/app2:
+    port: 8081
+  world.lc:
+    port: 8083
