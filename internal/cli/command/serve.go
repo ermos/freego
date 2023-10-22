@@ -146,7 +146,7 @@ func (Serve) errorPage(err error) string {
 	b = append(b, "<body style=\"padding: 20px\">")
 
 	// Freego ASCII art (Colossal Font)
-	b = append(b, "<pre style=\"color: #55fafa;font-size: 10px;\">")
+	b = append(b, "<pre style=\"color: #55fafa;font-size: 10px;line-height: 1.1;\">")
 
 	b = append(b, " .d888                                            <br>")
 	b = append(b, "d88P\"                                             <br>")
