@@ -82,5 +82,5 @@ func (u *Up) Execute(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return nil
+	return action.ToggleDomains(c, false)
 }

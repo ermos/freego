@@ -31,5 +31,5 @@ func (d *Down) Execute(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return nil
+	return action.ToggleDomains(c, true)
 }
