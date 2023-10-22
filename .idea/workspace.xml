@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cdf4a1a2-368b-4777-9ef2-60c1236aa7ce" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/cli/action/toggle_domains.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli/action/toggle_domains.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/cli/command/up.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli/command/up.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/freego.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/example/freego.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/example/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/example/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/cli/command/serve.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/cli/command/serve.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

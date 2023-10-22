@@ -36,8 +36,8 @@ func (d *Serve) Execute(cmd *cobra.Command, args []string) error {
 
 		for _, domain := range config.GetActiveDomains() {
 			rgx := regexp.QuoteMeta(domain.Domain)
-			rgx = strings.ReplaceAll(rgx, `\*`, `.+`)
-			rgx = fmt.Sprintf(`^%s.*$`, rgx)
+			rgx = strings.ReplaceAll(rgx, `\*`, `[^\/]+`)
+			rgx = fmt.Sprintf(`^%s(.*)$`, rgx)
 
 			targets = append(targets, model.ServiceTarget{
 				Url: d.urlParse(fmt.Sprintf("http://%s:%d", domain.Host, domain.Port)),
@@ -54,6 +54,7 @@ func (d *Serve) Execute(cmd *cobra.Command, args []string) error {
 						log.Println(req.Host+req.URL.Path, " => ", target.Url.Host)
 						req.URL.Scheme = target.Url.Scheme
 						req.URL.Host = target.Url.Host
+						req.URL.Path = target.Rgx.FindStringSubmatch(host)[1]
 						return
 					}
 				}

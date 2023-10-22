@@ -17,5 +17,8 @@ func addRouter(word string, port string) {
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, word)
 	})
+	router.HandleFunc("/healthz", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Fprint(w, "ok")
+	})
 	http.ListenAndServe(fmt.Sprintf(":%s", port), router)
 }
