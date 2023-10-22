@@ -1,8 +1,8 @@
 package command
 
 import (
-	"github.com/ermos/progo/internal/cli/action"
-	"github.com/ermos/progo/internal/pkg/config"
+	"github.com/ermos/freego/internal/cli/action"
+	"github.com/ermos/freego/internal/pkg/config"
 	"github.com/google/uuid"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -15,7 +15,7 @@ type Up struct {
 }
 
 func (u *Up) Flags(cmd *cobra.Command) {
-	cmd.Flags().StringVarP(&u.cfgFile, "file", "f", "", "Progo configuration file (default is progo.yaml)")
+	cmd.Flags().StringVarP(&u.cfgFile, "file", "f", "", "freego configuration file (default is freego.yaml)")
 }
 
 func (u *Up) Execute(cmd *cobra.Command, args []string) error {
@@ -56,7 +56,6 @@ func (u *Up) Execute(cmd *cobra.Command, args []string) error {
 			Domain:    domain,
 			Host:      host,
 			Port:      content.Port,
-			Status:    "up",
 			Link:      c.Link,
 			CreatedAt: time.Now(),
 		})

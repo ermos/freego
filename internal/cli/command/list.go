@@ -2,8 +2,8 @@ package command
 
 import (
 	"fmt"
-	"github.com/ermos/progo/internal/pkg/config"
-	"github.com/ermos/progo/internal/pkg/util"
+	"github.com/ermos/freego/internal/pkg/config"
+	"github.com/ermos/freego/internal/pkg/util"
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
 	"github.com/spf13/cobra"
@@ -38,14 +38,13 @@ func (l *List) Execute(cmd *cobra.Command, args []string) error {
 		},
 	})
 
-	t.AppendHeader(table.Row{"DOMAIN ID", "DOMAIN", "HOST", "PORT", "STATUS", "CREATED"})
+	t.AppendHeader(table.Row{"DOMAIN ID", "DOMAIN", "HOST", "PORT", "CREATED"})
 	for id, item := range config.GetActiveDomains() {
 		t.AppendRow(table.Row{
 			id,
 			item.Domain,
 			item.Host,
 			item.Port,
-			item.Status,
 			util.FormatXTimeAgo(item.CreatedAt, "never"),
 		})
 	}

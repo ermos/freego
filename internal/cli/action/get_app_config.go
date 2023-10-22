@@ -2,7 +2,7 @@ package action
 
 import (
 	"encoding/base64"
-	"github.com/ermos/progo/internal/cli/model"
+	"github.com/ermos/freego/internal/cli/model"
 	"gopkg.in/yaml.v3"
 	"os"
 	"path/filepath"
@@ -17,7 +17,7 @@ func GetAppConfig(customConfigFile string) (model.AppConfig, error) {
 		return c, err
 	}
 
-	cfgPath := filepath.Join(dir, "progo.yaml")
+	cfgPath := filepath.Join(dir, "freego.yaml")
 	if customConfigFile != "" {
 		cfgPath = filepath.Join(dir, customConfigFile)
 	}
@@ -25,7 +25,7 @@ func GetAppConfig(customConfigFile string) (model.AppConfig, error) {
 	configData, err := os.ReadFile(cfgPath)
 	if err != nil {
 		if customConfigFile == "" {
-			cfgPath = filepath.Join(dir, "progo.yml")
+			cfgPath = filepath.Join(dir, "freego.yml")
 			configData, err = os.ReadFile(cfgPath)
 		}
 		if err != nil {

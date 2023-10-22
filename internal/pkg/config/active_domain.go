@@ -11,7 +11,6 @@ type ActiveDomain struct {
 	Domain    string    `yaml:"domain"`
 	Host      string    `yaml:"host"`
 	Port      int       `yaml:"port"`
-	Status    string    `yaml:"status"`
 	CreatedAt time.Time `yaml:"createdat"`
 }
 

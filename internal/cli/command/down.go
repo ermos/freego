@@ -1,8 +1,8 @@
 package command
 
 import (
-	"github.com/ermos/progo/internal/cli/action"
-	"github.com/ermos/progo/internal/pkg/config"
+	"github.com/ermos/freego/internal/cli/action"
+	"github.com/ermos/freego/internal/pkg/config"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -12,7 +12,7 @@ type Down struct {
 }
 
 func (d *Down) Flags(cmd *cobra.Command) {
-	cmd.Flags().StringVarP(&d.cfgFile, "file", "f", "", "Progo configuration file (default is progo.yaml)")
+	cmd.Flags().StringVarP(&d.cfgFile, "file", "f", "", "freego configuration file (default is freego.yaml)")
 }
 
 func (d *Down) Execute(cmd *cobra.Command, args []string) error {

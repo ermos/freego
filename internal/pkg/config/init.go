@@ -26,7 +26,7 @@ func Init() (err error) {
 		}
 	}
 
-	configPath := filepath.Join(configDir, "progo/config.yaml")
+	configPath := filepath.Join(configDir, "freego/config.yaml")
 
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("config")

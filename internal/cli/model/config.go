@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/ermos/progo/internal/pkg/config"
+	"github.com/ermos/freego/internal/pkg/config"
 )
 
 type Config struct {

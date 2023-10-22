@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	"github.com/ermos/progo/internal/cli/command"
+	"github.com/ermos/freego/internal/cli/command"
 
 	"github.com/spf13/cobra"
 )
