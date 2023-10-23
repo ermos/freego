@@ -3,36 +3,27 @@ package config
 import (
 	"github.com/spf13/viper"
 	"os"
-	"os/user"
 	"path/filepath"
 )
 
 func Init() (err error) {
-	var configDir string
-
-	if os.Getenv("SUDO_USER") != "" {
-		var u *user.User
-
-		u, err = user.Lookup(os.Getenv("SUDO_USER"))
-		if err != nil {
-			return err
-		}
-
-		configDir = filepath.Join(u.HomeDir, ".config")
-	} else {
-		configDir, err = os.UserConfigDir()
-		if err != nil {
-			return err
-		}
+	configDir, err := GetDir()
+	if err != nil {
+		return err
 	}
 
-	configPath := filepath.Join(configDir, "freego/config.yaml")
+	configPath := filepath.Join(configDir, "config.yaml")
 
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("config")
 
 	if _, err = os.Stat(configPath); os.IsNotExist(err) {
-		err = os.MkdirAll(filepath.Dir(configPath), os.ModePerm)
+		err = os.MkdirAll(configDir, os.ModePerm)
+		if err != nil {
+			return err
+		}
+
+		err = os.MkdirAll(filepath.Join(configDir, "certificates"), os.ModePerm)
 		if err != nil {
 			return err
 		}

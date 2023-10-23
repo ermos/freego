@@ -2,6 +2,7 @@ package command
 
 import (
 	"github.com/ermos/freego/internal/cli/action"
+	"github.com/ermos/freego/internal/pkg/certificate"
 	"github.com/ermos/freego/internal/pkg/config"
 	"github.com/google/uuid"
 	"github.com/spf13/cobra"
@@ -77,6 +78,12 @@ func (u *Up) Execute(cmd *cobra.Command, args []string) error {
 	}
 
 	action.SetLastUpdate()
+
+	for domain := range c.Domains {
+		if err = certificate.Generate(domain); err != nil {
+			return err
+		}
+	}
 
 	if err = viper.WriteConfig(); err != nil {
 		return err

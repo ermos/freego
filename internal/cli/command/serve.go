@@ -1,8 +1,10 @@
 package command
 
 import (
+	"crypto/tls"
 	"fmt"
 	"github.com/ermos/freego/internal/cli/model"
+	"github.com/ermos/freego/internal/pkg/certificate"
 	"github.com/ermos/freego/internal/pkg/config"
 	"github.com/ermos/freego/internal/pkg/util"
 	"github.com/spf13/cobra"
@@ -66,15 +68,34 @@ func (d *Serve) Execute(cmd *cobra.Command, args []string) error {
 			},
 		}
 
-		server := &http.Server{
+		err := certificate.Load()
+		if err != nil {
+			panic(err)
+		}
+
+		httpServer := &http.Server{
 			Addr:    ":80",
 			Handler: proxy,
+		}
+
+		httpsServer := &http.Server{
+			Addr:    ":443",
+			Handler: proxy,
+			TLSConfig: &tls.Config{
+				Certificates:   certificate.GetAll(),
+				GetCertificate: certificate.GetCertificate,
+			},
 		}
 
 		serverErr := make(chan error, 1)
 
 		go func() {
-			err := server.ListenAndServe()
+			err = httpServer.ListenAndServe()
+			serverErr <- err
+		}()
+
+		go func() {
+			err = httpsServer.ListenAndServeTLS("", "")
 			serverErr <- err
 		}()
 
@@ -94,11 +115,14 @@ func (d *Serve) Execute(cmd *cobra.Command, args []string) error {
 		}()
 
 		select {
-		case err := <-serverErr:
+		case err = <-serverErr:
 			panic(err)
 		case <-reload:
 			log.Println("Config updated ! freego is reloading...")
-			if err := server.Close(); err != nil {
+			if err = httpServer.Close(); err != nil {
+				panic(err)
+			}
+			if err = httpsServer.Close(); err != nil {
 				panic(err)
 			}
 		}
