@@ -2,6 +2,7 @@ package action
 
 import (
 	"encoding/base64"
+	"fmt"
 	"github.com/ermos/freego/internal/cli/model"
 	"gopkg.in/yaml.v3"
 	"os"
@@ -38,7 +39,29 @@ func GetAppConfig(customConfigFile string) (model.AppConfig, error) {
 		return c, err
 	}
 
-	c.Link = strings.ReplaceAll(strings.ToLower(base64.StdEncoding.EncodeToString([]byte(cfgPath))), "=", "")
+	for domain, content := range c.Domains {
+		if content.Host == "" {
+			content.Host = "127.0.0.1"
+		}
+
+		if content.Port == 0 {
+			return c, fmt.Errorf("%s: port is required", domain)
+		}
+
+		if content.Port == 80 {
+			return c, fmt.Errorf("%s: port 80 is reserved", domain)
+		}
+
+		c.Domains[domain] = content
+	}
+
+	c.Link = strings.ReplaceAll(
+		strings.ToLower(
+			base64.StdEncoding.EncodeToString([]byte(cfgPath)),
+		),
+		"=",
+		"",
+	)
 
 	return c, err
 }

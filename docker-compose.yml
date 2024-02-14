@@ -1,0 +1,17 @@
+services:
+  freego:
+    build: .
+    container_name: freego
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /etc/hosts:/freego/hosts
+      - /home/kilian/.config/freego/config.yaml:/freego/config.yaml
+      - /home/kilian/.config/freego/certificates:/freego/certificates
+
+networks:
+  default:
+    name: web
+    external: true

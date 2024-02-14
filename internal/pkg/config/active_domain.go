@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"github.com/spf13/viper"
+	"net/url"
 	"time"
 )
 
@@ -14,10 +15,22 @@ type ActiveDomain struct {
 	CreatedAt time.Time `yaml:"createdat"`
 }
 
+func (ad ActiveDomain) GetBaseDomain() string {
+	u, err := url.Parse("https://" + ad.Domain)
+	if err != nil {
+		return ""
+	}
+
+	return u.Host
+}
+
 func GetActiveDomains() map[string]ActiveDomain {
 	var activeDomains map[string]ActiveDomain
 
-	_ = viper.UnmarshalKey("active_domains", &activeDomains)
+	err := viper.UnmarshalKey("active_domains", &activeDomains)
+	if err != nil {
+		panic(err)
+	}
 
 	return activeDomains
 }

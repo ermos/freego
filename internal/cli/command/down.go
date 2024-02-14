@@ -2,9 +2,7 @@ package command
 
 import (
 	"github.com/ermos/freego/internal/cli/action"
-	"github.com/ermos/freego/internal/pkg/config"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 type Down struct {
@@ -16,20 +14,17 @@ func (d *Down) Flags(cmd *cobra.Command) {
 }
 
 func (d *Down) Execute(cmd *cobra.Command, args []string) error {
+	var toggleDomains []action.ToggleDomain
+
 	c, err := action.GetAppConfig(d.cfgFile)
 	if err != nil {
 		return err
 	}
 
-	for id := range config.GetActiveDomainsFromLink(c.Link) {
-		config.RemoveActiveDomain(id)
-	}
-
-	action.SetLastUpdate()
-
-	if err = viper.WriteConfig(); err != nil {
+	err = action.RemoveHostsFromLink(c.Link)
+	if err != nil {
 		return err
 	}
 
-	return action.ToggleDomains(c, true)
+	return action.ToggleDomains(toggleDomains)
 }

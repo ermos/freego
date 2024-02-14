@@ -6,13 +6,15 @@ import (
 	"path/filepath"
 )
 
+var configPath string
+
 func Init() (err error) {
 	configDir, err := GetDir()
 	if err != nil {
 		return err
 	}
 
-	configPath := filepath.Join(configDir, "config.yaml")
+	configPath = filepath.Join(configDir, "config.yaml")
 
 	viper.SetConfigType("yaml")
 	viper.SetConfigName("config")
@@ -42,4 +44,8 @@ func Init() (err error) {
 
 func Reload() (err error) {
 	return viper.ReadInConfig()
+}
+
+func GetConfigPath() string {
+	return configPath
 }

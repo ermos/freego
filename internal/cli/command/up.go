@@ -20,6 +20,8 @@ func (u *Up) Flags(cmd *cobra.Command) {
 }
 
 func (u *Up) Execute(cmd *cobra.Command, args []string) error {
+	var toggleDomains []action.ToggleDomain
+
 	c, err := action.GetAppConfig(u.cfgFile)
 	if err != nil {
 		return err
@@ -29,6 +31,7 @@ func (u *Up) Execute(cmd *cobra.Command, args []string) error {
 
 	for domain, content := range c.Domains {
 		var id string
+		var toggleDomain action.ToggleDomain
 
 		for gdId, gd := range linkedDomains {
 			if gd.Domain == domain {
@@ -46,20 +49,24 @@ func (u *Up) Execute(cmd *cobra.Command, args []string) error {
 			}
 
 			id = strings.ReplaceAll(idUuid.String(), "-", "")
-		}
 
-		host := content.Host
-		if host == "" {
-			host = "127.0.0.1"
+			toggleDomain.Status = "Added"
+		} else {
+			toggleDomain.Status = "Updated"
 		}
 
 		config.AddActiveDomain(id, config.ActiveDomain{
 			Domain:    domain,
-			Host:      host,
+			Host:      content.Host,
 			Port:      content.Port,
 			Link:      c.Link,
 			CreatedAt: time.Now(),
 		})
+
+		toggleDomain.DomainName = domain
+		toggleDomain.Domain = content
+
+		toggleDomains = append(toggleDomains, toggleDomain)
 	}
 
 	for gdId, gd := range linkedDomains {
@@ -89,5 +96,5 @@ func (u *Up) Execute(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	return action.ToggleDomains(c, false)
+	return action.ToggleDomains(toggleDomains)
 }

@@ -6,12 +6,22 @@ import (
 	"github.com/ermos/freego/internal/pkg/term"
 )
 
-func ToggleDomains(c model.AppConfig, isDisabled bool) error {
-	var domains []string
+type ToggleDomain struct {
+	DomainName string
+	Domain     model.Domain
+	Status     string
+}
 
-	for domain, content := range c.Domains {
-		domains = append(domains, fmt.Sprintf("%s (%s:%d)", domain, content.Host, content.Port))
+func (td ToggleDomain) ToString() string {
+	return fmt.Sprintf("%s (%s:%d) [%s]", td.DomainName, td.Domain.Host, td.Domain.Port, td.Status)
+}
+
+func ToggleDomains(domains []ToggleDomain) error {
+	var list []string
+
+	for _, domain := range domains {
+		list = append(list, domain.ToString())
 	}
 
-	return term.ToggleDomain(domains, isDisabled)
+	return term.ToggleDomain(list)
 }

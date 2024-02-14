@@ -21,19 +21,13 @@ var (
 	checkMark = lipgloss.NewStyle().Foreground(lipgloss.Color("42")).SetString("✓")
 )
 
-func newToggleDomain(domains []string, isDisable bool) toggleDomain {
+func newToggleDomain(domains []string) toggleDomain {
 	s := spinner.New()
 	s.Style = lipgloss.NewStyle().Foreground(lipgloss.Color("63"))
-
-	status := "Added"
-	if isDisable {
-		status = "Removed"
-	}
 
 	return toggleDomain{
 		domains:   domains,
 		nbDomains: len(domains),
-		status:    status,
 		spinner:   s,
 	}
 }
@@ -61,7 +55,7 @@ func (m toggleDomain) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		}
 
 		t := tea.Batch(
-			tea.Printf("%s %s [%s]", checkMark, m.domains[m.index], m.status),
+			tea.Printf("%s %s", checkMark, m.domains[m.index]),
 			downloadAndInstall(m.domains[m.index]),
 		)
 
@@ -94,7 +88,11 @@ func downloadAndInstall(pkg string) tea.Cmd {
 	})
 }
 
-func ToggleDomain(domains []string, isDisable bool) error {
-	_, err := tea.NewProgram(newToggleDomain(domains, isDisable)).Run()
+func ToggleDomain(domains []string) error {
+	if len(domains) == 0 {
+		return nil
+	}
+
+	_, err := tea.NewProgram(newToggleDomain(domains)).Run()
 	return err
 }
